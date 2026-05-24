@@ -1,0 +1,20 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export function formatNumber(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 ? 1 : 0)}K`;
+  return `${n}`;
+}
+
+export function formatContextWindow(tokens: number): string {
+  return `${formatNumber(tokens)} ctx`;
+}
+
+export function formatUSD(n: number): string {
+  return `$${n.toFixed(2)}`;
+}
