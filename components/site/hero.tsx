@@ -1,20 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { RefreshCw } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Props {
   modelCount: number;
   creatorCount: number;
   apiCount: number;
+  lastUpdated: string; // ISO
 }
 
-export function Hero({ modelCount, creatorCount, apiCount }: Props) {
+export function Hero({ modelCount, creatorCount, apiCount, lastUpdated }: Props) {
   return (
     <section className="mb-10 md:mb-14">
-      <Badge variant="accent" className="mb-4 animate-fade-in-up">
-        <span className="font-mono">v0.2</span> · обновлено еженедельно
-      </Badge>
+      <div className="flex flex-wrap items-center gap-2 mb-4 animate-fade-in-up">
+        <Badge variant="accent">
+          <span className="font-mono">v0.3</span> · живые данные с Hugging Face
+        </Badge>
+        <Badge variant="outline" className="gap-1">
+          <RefreshCw className="h-3 w-3" />
+          обновлено <FreshAgo iso={lastUpdated} />
+        </Badge>
+      </div>
       <h1
         className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.05] animate-fade-in-up [animation-fill-mode:both]"
         style={{ animationDelay: "60ms" }}
@@ -28,8 +36,8 @@ export function Hero({ modelCount, creatorCount, apiCount }: Props) {
         style={{ animationDelay: "120ms" }}
       >
         Открытые LLM от {creatorCount} разработчиков в одной таблице: бенчмарки,
-        лицензии, контекстное окно, цена API и способы запуска. Фильтруйте,
-        сортируйте, сравнивайте по 2–6 моделей одновременно.
+        лицензии, контекстное окно, цена API и способы запуска. Свежие тренды
+        подтягиваются с Hugging Face Hub раз в час.
       </p>
 
       <dl className="mt-8 grid grid-cols-3 max-w-xl gap-2 text-sm">
@@ -65,7 +73,6 @@ function useCountUp(target: number, durationMs: number): number {
     const start = performance.now();
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / durationMs);
-      // ease-out cubic
       const eased = 1 - Math.pow(1 - t, 3);
       setValue(Math.round(target * eased));
       if (t < 1) raf = requestAnimationFrame(step);
@@ -74,4 +81,27 @@ function useCountUp(target: number, durationMs: number): number {
     return () => cancelAnimationFrame(raf);
   }, [target, durationMs]);
   return value;
+}
+
+/** Human-readable "5 minutes ago" — updates every minute on the client to avoid hydration drift. */
+function FreshAgo({ iso }: { iso: string }) {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    setNow(Date.now());
+    const id = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  // SSR / first paint: show the static timestamp to avoid hydration mismatch
+  if (now === null) {
+    return <span className="font-mono">{iso.slice(11, 16)} UTC</span>;
+  }
+  const diffMs = now - new Date(iso).getTime();
+  const minutes = Math.max(0, Math.round(diffMs / 60_000));
+  if (minutes < 1) return <span className="font-mono">только что</span>;
+  if (minutes < 60) return <span className="font-mono">{minutes} мин назад</span>;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return <span className="font-mono">{hours} ч назад</span>;
+  const days = Math.round(hours / 24);
+  return <span className="font-mono">{days} д назад</span>;
 }
