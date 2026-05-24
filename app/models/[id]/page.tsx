@@ -70,7 +70,8 @@ export default function ModelPage({ params }: { params: { id: string } }) {
         <div className="flex flex-wrap gap-2">
           <Button asChild>
             <a href={model.hfUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-4 w-4" /> Hugging Face
+              <ExternalLink className="h-4 w-4" />
+              {model.license === "proprietary" ? "Документация" : "Hugging Face"}
             </a>
           </Button>
           {model.githubUrl && (
