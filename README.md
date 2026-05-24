@@ -69,7 +69,7 @@ curl -X POST https://your-host/api/revalidate \
 
 ## Каталог (seed)
 
-В `lib/data.ts` лежит seed-каталог из ~40 моделей (Llama 3 / 3.1 / 3.2 / 3.3, Mistral Large 2 / Small 3 / Mixtral / Nemo / Ministral / Pixtral / Codestral, Qwen 2.5 / Qwen3 / QwQ, DeepSeek V2.5 / V3 / R1 + distills, Gemma 2, Phi-3 / Phi-4, Command R+ / Aya, Yi, OLMo 2, Granite, StarCoder2, DBRX, Jamba, InternLM, GLM-4, Nemotron, Falcon). Бенчмарки и цены — на момент добавления; для продакшена подключите свой источник.
+В `lib/data.ts` лежит seed-каталог из ~55 моделей (Llama 3 / 3.1 / 3.2 / 3.3, Mistral Large 2 / Small 3 / Mixtral / Nemo / Ministral / Pixtral / Codestral, Qwen 2.5 / Qwen3 / QwQ, DeepSeek V2.5 / V3 / R1 + distills, Gemma 2, Phi-3 / Phi-4, Command R+ / Aya, Yi, OLMo 2, Granite, StarCoder2, DBRX, Jamba, InternLM, GLM-4, Nemotron, Falcon) и closed-source frontier для сравнения статистики (GPT-4o / 4o-mini / 4 Turbo, o1 / o3-mini, Claude 3 Opus / 3.5 Sonnet & Haiku / 3.7 Sonnet, Gemini 1.5 Pro & Flash / 2.0 Flash & Thinking, Grok 2 / 3). Бенчмарки и цены — на момент добавления; для продакшена подключите свой источник.
 
 ## Фильтры
 

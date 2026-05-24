@@ -56,12 +56,12 @@ export async function TrendingRail() {
       </header>
 
       <div className="relative">
-        <div className="-mx-2 flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 pb-3 [scrollbar-width:thin]">
+        <div className="scroll-rail -mx-2 flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 pb-2">
           {items.map((m, i) => (
             <TrendingCard key={m.id} model={m} index={i} />
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-2 right-0 w-12 bg-gradient-to-l from-background to-transparent" />
       </div>
     </section>
   );
