@@ -1,13 +1,77 @@
 import type { LLMModel } from "@/types/model";
 
+/**
+ * Mock-каталог открытых LLM.
+ * Бенчмарки — округлённые публичные репорты (Open LLM Leaderboard, EvalPlus, MT-Bench, технические отчёты).
+ * Цены — на момент добавления; всегда проверяйте у провайдера.
+ */
 export const MODELS: LLMModel[] = [
+  // ─── Meta · Llama 3.x ────────────────────────────────────────────────────
+  {
+    id: "llama-3.3-70b",
+    name: "Llama 3.3 70B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Полировка Llama 3.1 70B: догнала 3.1 405B по большинству бенчмарков при 6× меньших параметрах.",
+    releaseDate: "2024-12-06",
+    parameters: "70B",
+    paramsB: 70,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct",
+    githubUrl: "https://github.com/meta-llama/llama-models",
+    benchmarks: { mmlu: 86.0, humaneval: 88.4, gsm8k: 95.1, truthfulqa: 60.5, mtBench: 9.1 },
+    pricing: { inputPerMillion: 0.59, outputPerMillion: 0.79, provider: "Together AI" },
+    deploymentOptions: ["local", "api", "web-ui"],
+    trend: "up",
+    tags: ["general", "long-context", "flagship"]
+  },
+  {
+    id: "llama-3.1-405b",
+    name: "Llama 3.1 405B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Крупнейшая открытая dense-модель. Уровень GPT-4o / Claude 3.5 Sonnet на многих задачах.",
+    releaseDate: "2024-07-23",
+    parameters: "405B",
+    paramsB: 405,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Meta-Llama-3.1-405B-Instruct",
+    benchmarks: { mmlu: 88.6, humaneval: 89.0, gsm8k: 96.8, truthfulqa: 65.8, mtBench: 9.1 },
+    pricing: { inputPerMillion: 3.5, outputPerMillion: 3.5, provider: "Together AI" },
+    deploymentOptions: ["api"],
+    trend: "stable",
+    tags: ["flagship", "frontier", "long-context"]
+  },
+  {
+    id: "llama-3.1-70b",
+    name: "Llama 3.1 70B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Расширенный до 128K контекст и многоязычность по сравнению с 3.0. Универсальная рабочая модель.",
+    releaseDate: "2024-07-23",
+    parameters: "70B",
+    paramsB: 70,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct",
+    benchmarks: { mmlu: 83.6, humaneval: 80.5, gsm8k: 95.1, truthfulqa: 60.2, mtBench: 9.0 },
+    pricing: { inputPerMillion: 0.59, outputPerMillion: 0.79, provider: "Together AI" },
+    deploymentOptions: ["local", "api", "web-ui"],
+    trend: "stable",
+    tags: ["general", "long-context"]
+  },
   {
     id: "llama-3-70b",
     name: "Llama 3 70B Instruct",
     creator: "Meta",
     creatorLogo: "🦙",
     description:
-      "Открытая флагманская модель Meta с сильным reasoning и кодом. Активно используется в продакшене.",
+      "Первый релиз Llama 3 в апреле 2024 — сильный baseline, до сих пор популярен в продакшене.",
     releaseDate: "2024-04-18",
     parameters: "70B",
     paramsB: 70,
@@ -15,21 +79,125 @@ export const MODELS: LLMModel[] = [
     license: "llama3-community",
     hfUrl: "https://huggingface.co/meta-llama/Meta-Llama-3-70B-Instruct",
     githubUrl: "https://github.com/meta-llama/llama3",
-    benchmarks: {
-      mmlu: 82.0,
-      humaneval: 81.7,
-      gsm8k: 93.0,
-      truthfulqa: 51.4,
-      mtBench: 8.95
-    },
-    pricing: {
-      inputPerMillion: 0.59,
-      outputPerMillion: 0.79,
-      provider: "Together AI"
-    },
+    benchmarks: { mmlu: 82.0, humaneval: 81.7, gsm8k: 93.0, truthfulqa: 51.4, mtBench: 8.95 },
+    pricing: { inputPerMillion: 0.59, outputPerMillion: 0.79, provider: "Together AI" },
     deploymentOptions: ["local", "api", "web-ui"],
+    trend: "down",
+    tags: ["general", "english"]
+  },
+  {
+    id: "llama-3.1-8b",
+    name: "Llama 3.1 8B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Самая популярная маленькая Llama: 128K контекст, отлично крутится локально на 16 ГБ VRAM.",
+    releaseDate: "2024-07-23",
+    parameters: "8B",
+    paramsB: 8,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct",
+    benchmarks: { mmlu: 69.4, humaneval: 72.6, gsm8k: 84.5, truthfulqa: 45.0, mtBench: 8.0 },
+    pricing: { inputPerMillion: 0.18, outputPerMillion: 0.18, provider: "Groq" },
+    deploymentOptions: ["local", "colab", "api"],
+    trend: "up",
+    tags: ["small", "long-context", "edge"]
+  },
+  {
+    id: "llama-3.2-3b",
+    name: "Llama 3.2 3B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Edge-модель Meta для мобильных и in-browser сценариев. Дистиллят из 8B.",
+    releaseDate: "2024-09-25",
+    parameters: "3B",
+    paramsB: 3,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct",
+    benchmarks: { mmlu: 63.4, humaneval: 60.4, gsm8k: 77.7, truthfulqa: 42.0, mtBench: 7.4 },
+    deploymentOptions: ["local", "colab"],
+    trend: "up",
+    tags: ["edge", "tiny", "mobile"]
+  },
+  {
+    id: "llama-3.2-1b",
+    name: "Llama 3.2 1B Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Самая маленькая Llama: меньше гигабайта в 4-bit, годится для on-device assistant.",
+    releaseDate: "2024-09-25",
+    parameters: "1B",
+    paramsB: 1,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct",
+    benchmarks: { mmlu: 49.3, humaneval: 38.4, gsm8k: 44.4, truthfulqa: 37.0, mtBench: 6.4 },
+    deploymentOptions: ["local"],
     trend: "stable",
-    tags: ["general", "code", "english"]
+    tags: ["edge", "tiny", "mobile"]
+  },
+  {
+    id: "llama-3.2-90b-vision",
+    name: "Llama 3.2 90B Vision Instruct",
+    creator: "Meta",
+    creatorLogo: "🦙",
+    description:
+      "Мультимодальная Llama: понимает изображения, документы, графики. Конкурент GPT-4o-mini в VLM.",
+    releaseDate: "2024-09-25",
+    parameters: "90B",
+    paramsB: 90,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/meta-llama/Llama-3.2-90B-Vision-Instruct",
+    benchmarks: { mmlu: 85.3, humaneval: 75.6, gsm8k: 93.0, truthfulqa: 56.6, mtBench: 8.9 },
+    pricing: { inputPerMillion: 1.2, outputPerMillion: 1.2, provider: "Together AI" },
+    deploymentOptions: ["local", "api"],
+    trend: "stable",
+    tags: ["vision", "multimodal", "long-context"]
+  },
+
+  // ─── Mistral AI ──────────────────────────────────────────────────────────
+  {
+    id: "mistral-large-2407",
+    name: "Mistral Large 2 (123B)",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description:
+      "Флагман Mistral: 80+ языков, агентность, отличный код. Веса опубликованы под research-only лицензией.",
+    releaseDate: "2024-07-24",
+    parameters: "123B",
+    paramsB: 123,
+    contextWindow: 128000,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/mistralai/Mistral-Large-Instruct-2407",
+    benchmarks: { mmlu: 84.0, humaneval: 92.0, gsm8k: 93.0, truthfulqa: 60.0, mtBench: 9.05 },
+    pricing: { inputPerMillion: 3.0, outputPerMillion: 9.0, provider: "Mistral La Plateforme" },
+    deploymentOptions: ["api", "local"],
+    trend: "stable",
+    tags: ["flagship", "multilingual", "tools"]
+  },
+  {
+    id: "mistral-small-3",
+    name: "Mistral Small 3 (24B)",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description:
+      "Возвращение к Apache 2.0 в большом размере: 24B, низкая латентность, сильна в reasoning и tool use.",
+    releaseDate: "2025-01-30",
+    parameters: "24B",
+    paramsB: 24,
+    contextWindow: 32768,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/mistralai/Mistral-Small-24B-Instruct-2501",
+    benchmarks: { mmlu: 81.0, humaneval: 84.8, gsm8k: 90.7, truthfulqa: 58.9, mtBench: 8.8 },
+    pricing: { inputPerMillion: 0.2, outputPerMillion: 0.6, provider: "Mistral La Plateforme" },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["apache", "general", "tools"]
   },
   {
     id: "mixtral-8x7b",
@@ -44,21 +212,118 @@ export const MODELS: LLMModel[] = [
     contextWindow: 32768,
     license: "apache-2.0",
     hfUrl: "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1",
-    benchmarks: {
-      mmlu: 70.6,
-      humaneval: 40.2,
-      gsm8k: 74.4,
-      truthfulqa: 64.6,
-      mtBench: 8.3
-    },
-    pricing: {
-      inputPerMillion: 0.24,
-      outputPerMillion: 0.24,
-      provider: "Anyscale"
-    },
+    benchmarks: { mmlu: 70.6, humaneval: 40.2, gsm8k: 74.4, truthfulqa: 64.6, mtBench: 8.3 },
+    pricing: { inputPerMillion: 0.24, outputPerMillion: 0.24, provider: "Anyscale" },
     deploymentOptions: ["local", "api"],
     trend: "down",
     tags: ["moe", "multilingual", "fast"]
+  },
+  {
+    id: "mistral-nemo-12b",
+    name: "Mistral Nemo 12B",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description: "Совместная модель Mistral × NVIDIA: 128K контекст, отличное многоязычие.",
+    releaseDate: "2024-07-18",
+    parameters: "12B",
+    paramsB: 12,
+    contextWindow: 128000,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407",
+    benchmarks: { mmlu: 68.0, humaneval: 56.7, gsm8k: 78.4, truthfulqa: 50.3, mtBench: 8.1 },
+    pricing: { inputPerMillion: 0.18, outputPerMillion: 0.18, provider: "Together AI" },
+    deploymentOptions: ["local", "api", "colab"],
+    trend: "stable",
+    tags: ["multilingual", "long-context", "apache"]
+  },
+  {
+    id: "ministral-8b",
+    name: "Ministral 8B Instruct",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description: "Маленькая edge-модель Mistral. 128K контекст, заточена под локальный запуск.",
+    releaseDate: "2024-10-16",
+    parameters: "8B",
+    paramsB: 8,
+    contextWindow: 128000,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/mistralai/Ministral-8B-Instruct-2410",
+    benchmarks: { mmlu: 65.0, humaneval: 67.7, gsm8k: 80.0, truthfulqa: 47.5, mtBench: 7.9 },
+    deploymentOptions: ["local", "api"],
+    trend: "stable",
+    tags: ["edge", "long-context"]
+  },
+  {
+    id: "pixtral-12b",
+    name: "Pixtral 12B",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description: "Первый мультимодальный релиз Mistral с открытыми весами. Распознавание документов и графиков.",
+    releaseDate: "2024-09-17",
+    parameters: "12B",
+    paramsB: 12,
+    contextWindow: 131072,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/mistralai/Pixtral-12B-2409",
+    benchmarks: { mmlu: 69.2, humaneval: 72.0, gsm8k: 80.5, truthfulqa: 48.0, mtBench: 8.1 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["vision", "multimodal", "apache"]
+  },
+  {
+    id: "codestral-22b",
+    name: "Codestral 22B",
+    creator: "Mistral AI",
+    creatorLogo: "🌬️",
+    description: "Специализированный code-LLM Mistral: 80+ языков программирования, FIM-задачи.",
+    releaseDate: "2024-05-29",
+    parameters: "22B",
+    paramsB: 22,
+    contextWindow: 32768,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/mistralai/Codestral-22B-v0.1",
+    benchmarks: { mmlu: 65.0, humaneval: 81.1, gsm8k: 71.0, truthfulqa: 48.0, mtBench: 8.3 },
+    deploymentOptions: ["local", "api"],
+    trend: "stable",
+    tags: ["code", "specialized"]
+  },
+
+  // ─── Alibaba · Qwen ──────────────────────────────────────────────────────
+  {
+    id: "qwen-3-235b-a22b",
+    name: "Qwen3 235B-A22B",
+    creator: "Alibaba",
+    creatorLogo: "🐲",
+    description:
+      "Флагман семейства Qwen3: MoE с 235B параметров и 22B активных. Hybrid thinking/non-thinking режим.",
+    releaseDate: "2025-04-29",
+    parameters: "MoE 235B (22B активных)",
+    paramsB: 22,
+    contextWindow: 131072,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    benchmarks: { mmlu: 87.7, humaneval: 91.5, gsm8k: 96.4, truthfulqa: 64.0, mtBench: 9.1 },
+    pricing: { inputPerMillion: 0.6, outputPerMillion: 1.8, provider: "DashScope" },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["moe", "reasoning", "apache", "flagship"]
+  },
+  {
+    id: "qwen-3-32b",
+    name: "Qwen3 32B",
+    creator: "Alibaba",
+    creatorLogo: "🐲",
+    description: "Dense-вариант Qwen3 с гибридным thinking режимом. Сильна в математике и коде.",
+    releaseDate: "2025-04-29",
+    parameters: "32B",
+    paramsB: 32,
+    contextWindow: 131072,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/Qwen/Qwen3-32B",
+    benchmarks: { mmlu: 82.5, humaneval: 88.4, gsm8k: 93.6, truthfulqa: 60.0, mtBench: 8.9 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["reasoning", "apache", "math"]
   },
   {
     id: "qwen-2.5-72b",
@@ -73,214 +338,29 @@ export const MODELS: LLMModel[] = [
     contextWindow: 131072,
     license: "apache-2.0",
     hfUrl: "https://huggingface.co/Qwen/Qwen2.5-72B-Instruct",
-    benchmarks: {
-      mmlu: 85.0,
-      humaneval: 86.6,
-      gsm8k: 95.8,
-      truthfulqa: 60.4,
-      mtBench: 9.05
-    },
-    pricing: {
-      inputPerMillion: 0.9,
-      outputPerMillion: 0.9,
-      provider: "Together AI"
-    },
+    benchmarks: { mmlu: 85.0, humaneval: 86.6, gsm8k: 95.8, truthfulqa: 60.4, mtBench: 9.05 },
+    pricing: { inputPerMillion: 0.9, outputPerMillion: 0.9, provider: "Together AI" },
     deploymentOptions: ["local", "api", "web-ui"],
-    trend: "up",
+    trend: "stable",
     tags: ["general", "math", "code", "multilingual"]
   },
   {
-    id: "deepseek-v2.5",
-    name: "DeepSeek-V2.5",
-    creator: "DeepSeek",
-    creatorLogo: "🐋",
-    description:
-      "Сильный универсальный MoE с акцентом на код и reasoning, очень дешёвый API.",
-    releaseDate: "2024-09-05",
-    parameters: "MoE 236B",
-    paramsB: 21,
-    contextWindow: 128000,
-    license: "custom",
-    hfUrl: "https://huggingface.co/deepseek-ai/DeepSeek-V2.5",
-    benchmarks: {
-      mmlu: 80.4,
-      humaneval: 89.0,
-      gsm8k: 95.1,
-      truthfulqa: 58.0,
-      mtBench: 9.02
-    },
-    pricing: {
-      inputPerMillion: 0.14,
-      outputPerMillion: 0.28,
-      provider: "DeepSeek"
-    },
-    deploymentOptions: ["api", "web-ui"],
-    trend: "up",
-    tags: ["moe", "code", "cheap"]
-  },
-  {
-    id: "phi-3-medium",
-    name: "Phi-3 Medium 14B",
-    creator: "Microsoft",
-    creatorLogo: "🪟",
-    description:
-      "Маленькая, но плотная SLM с впечатляющими бенчмарками на reasoning.",
-    releaseDate: "2024-05-21",
-    parameters: "14B",
-    paramsB: 14,
-    contextWindow: 128000,
-    license: "mit",
-    hfUrl: "https://huggingface.co/microsoft/Phi-3-medium-128k-instruct",
-    benchmarks: {
-      mmlu: 78.0,
-      humaneval: 62.2,
-      gsm8k: 87.5,
-      truthfulqa: 63.1,
-      mtBench: 8.38
-    },
-    deploymentOptions: ["local", "colab"],
-    trend: "stable",
-    tags: ["slm", "reasoning", "edge"]
-  },
-  {
-    id: "gemma-2-27b",
-    name: "Gemma 2 27B",
-    creator: "Google",
-    creatorLogo: "💎",
-    description:
-      "Открытая модель от Google DeepMind с конкурентной производительностью в среднем классе.",
-    releaseDate: "2024-06-27",
-    parameters: "27B",
-    paramsB: 27,
-    contextWindow: 8192,
-    license: "custom",
-    hfUrl: "https://huggingface.co/google/gemma-2-27b-it",
-    benchmarks: {
-      mmlu: 75.2,
-      humaneval: 51.8,
-      gsm8k: 74.0,
-      truthfulqa: 58.0,
-      mtBench: 8.47
-    },
-    pricing: {
-      inputPerMillion: 0.27,
-      outputPerMillion: 0.27,
-      provider: "Together AI"
-    },
-    deploymentOptions: ["local", "api"],
-    trend: "stable",
-    tags: ["general", "english"]
-  },
-  {
-    id: "command-r-plus",
-    name: "Command R+",
-    creator: "Cohere",
-    creatorLogo: "🅒",
-    description:
-      "Заточенная под RAG и tool use модель с длинным контекстом и сильным многоязычием.",
-    releaseDate: "2024-04-04",
-    parameters: "104B",
-    paramsB: 104,
-    contextWindow: 128000,
-    license: "research-only",
-    hfUrl: "https://huggingface.co/CohereForAI/c4ai-command-r-plus",
-    benchmarks: {
-      mmlu: 75.7,
-      humaneval: 51.4,
-      gsm8k: 70.7,
-      truthfulqa: 64.5,
-      mtBench: 8.4
-    },
-    pricing: {
-      inputPerMillion: 3.0,
-      outputPerMillion: 15.0,
-      provider: "Cohere"
-    },
-    deploymentOptions: ["api", "web-ui"],
-    trend: "down",
-    tags: ["rag", "tools", "multilingual"]
-  },
-  {
-    id: "yi-1.5-34b",
-    name: "Yi 1.5 34B Chat",
-    creator: "01.AI",
-    creatorLogo: "🜂",
-    description:
-      "Билингвальная модель (EN/ZH) с хорошим балансом качества и стоимости.",
-    releaseDate: "2024-05-12",
-    parameters: "34B",
-    paramsB: 34,
-    contextWindow: 32768,
+    id: "qwen-2.5-7b",
+    name: "Qwen 2.5 7B Instruct",
+    creator: "Alibaba",
+    creatorLogo: "🐲",
+    description: "Маленькая Qwen 2.5: отличный баланс качества и стоимости запуска.",
+    releaseDate: "2024-09-19",
+    parameters: "7B",
+    paramsB: 7,
+    contextWindow: 131072,
     license: "apache-2.0",
-    hfUrl: "https://huggingface.co/01-ai/Yi-1.5-34B-Chat",
-    benchmarks: {
-      mmlu: 76.8,
-      humaneval: 75.2,
-      gsm8k: 82.7,
-      truthfulqa: 60.5,
-      mtBench: 8.5
-    },
-    deploymentOptions: ["local", "colab"],
-    trend: "stable",
-    tags: ["bilingual", "general"]
-  },
-  {
-    id: "mistral-nemo-12b",
-    name: "Mistral Nemo 12B",
-    creator: "Mistral AI",
-    creatorLogo: "🌬️",
-    description:
-      "Совместная модель Mistral × NVIDIA: 128K контекст, отличное многоязычие.",
-    releaseDate: "2024-07-18",
-    parameters: "12B",
-    paramsB: 12,
-    contextWindow: 128000,
-    license: "apache-2.0",
-    hfUrl: "https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407",
-    benchmarks: {
-      mmlu: 68.0,
-      humaneval: 56.7,
-      gsm8k: 78.4,
-      truthfulqa: 50.3,
-      mtBench: 8.1
-    },
-    pricing: {
-      inputPerMillion: 0.18,
-      outputPerMillion: 0.18,
-      provider: "Together AI"
-    },
+    hfUrl: "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct",
+    benchmarks: { mmlu: 74.2, humaneval: 84.8, gsm8k: 85.4, truthfulqa: 58.0, mtBench: 8.4 },
+    pricing: { inputPerMillion: 0.18, outputPerMillion: 0.18, provider: "Together AI" },
     deploymentOptions: ["local", "api", "colab"],
     trend: "up",
-    tags: ["multilingual", "long-context"]
-  },
-  {
-    id: "llama-3.1-8b",
-    name: "Llama 3.1 8B Instruct",
-    creator: "Meta",
-    creatorLogo: "🦙",
-    description:
-      "Маленькая Llama 3.1 с 128K контекстом — рабочая лошадка для локального запуска.",
-    releaseDate: "2024-07-23",
-    parameters: "8B",
-    paramsB: 8,
-    contextWindow: 128000,
-    license: "llama3-community",
-    hfUrl: "https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct",
-    benchmarks: {
-      mmlu: 69.4,
-      humaneval: 72.6,
-      gsm8k: 84.5,
-      truthfulqa: 45.0,
-      mtBench: 8.0
-    },
-    pricing: {
-      inputPerMillion: 0.18,
-      outputPerMillion: 0.18,
-      provider: "Groq"
-    },
-    deploymentOptions: ["local", "colab", "api"],
-    trend: "up",
-    tags: ["small", "long-context", "edge"]
+    tags: ["small", "apache", "math"]
   },
   {
     id: "qwen-2.5-coder-32b",
@@ -295,43 +375,484 @@ export const MODELS: LLMModel[] = [
     contextWindow: 131072,
     license: "apache-2.0",
     hfUrl: "https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct",
-    benchmarks: {
-      mmlu: 75.1,
-      humaneval: 92.7,
-      gsm8k: 91.1,
-      truthfulqa: 57.8,
-      mtBench: 8.8
-    },
+    benchmarks: { mmlu: 75.1, humaneval: 92.7, gsm8k: 91.1, truthfulqa: 57.8, mtBench: 8.8 },
     deploymentOptions: ["local", "api"],
     trend: "up",
-    tags: ["code", "specialized"]
+    tags: ["code", "specialized", "apache"]
   },
+  {
+    id: "qwq-32b",
+    name: "QwQ 32B Preview",
+    creator: "Alibaba",
+    creatorLogo: "🐲",
+    description: "Reasoning-модель Alibaba с chain-of-thought на уровне OpenAI o1-mini.",
+    releaseDate: "2024-11-28",
+    parameters: "32B",
+    paramsB: 32,
+    contextWindow: 32768,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/Qwen/QwQ-32B-Preview",
+    benchmarks: { mmlu: 76.4, humaneval: 80.5, gsm8k: 95.5, truthfulqa: 62.0, mtBench: 9.0 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["reasoning", "thinking", "apache"]
+  },
+
+  // ─── DeepSeek ────────────────────────────────────────────────────────────
+  {
+    id: "deepseek-v3",
+    name: "DeepSeek-V3 (671B MoE)",
+    creator: "DeepSeek",
+    creatorLogo: "🐋",
+    description:
+      "Открытый MoE-флагман уровня GPT-4o: 671B параметров, 37B активных, исключительно дешёвый API.",
+    releaseDate: "2024-12-26",
+    parameters: "MoE 671B (37B активных)",
+    paramsB: 37,
+    contextWindow: 128000,
+    license: "custom",
+    hfUrl: "https://huggingface.co/deepseek-ai/DeepSeek-V3",
+    benchmarks: { mmlu: 88.5, humaneval: 92.5, gsm8k: 96.4, truthfulqa: 67.0, mtBench: 9.1 },
+    pricing: { inputPerMillion: 0.27, outputPerMillion: 1.1, provider: "DeepSeek" },
+    deploymentOptions: ["api", "web-ui", "local"],
+    trend: "up",
+    tags: ["moe", "frontier", "cheap", "code"]
+  },
+  {
+    id: "deepseek-r1",
+    name: "DeepSeek-R1",
+    creator: "DeepSeek",
+    creatorLogo: "🐋",
+    description:
+      "Reasoning-модель на основе V3: RL-обучение CoT. Догоняет OpenAI o1 на math и code.",
+    releaseDate: "2025-01-20",
+    parameters: "MoE 671B (37B активных)",
+    paramsB: 37,
+    contextWindow: 128000,
+    license: "mit",
+    hfUrl: "https://huggingface.co/deepseek-ai/DeepSeek-R1",
+    benchmarks: { mmlu: 90.8, humaneval: 96.3, gsm8k: 97.3, truthfulqa: 71.5, mtBench: 9.2 },
+    pricing: { inputPerMillion: 0.55, outputPerMillion: 2.19, provider: "DeepSeek" },
+    deploymentOptions: ["api", "web-ui", "local"],
+    trend: "up",
+    tags: ["reasoning", "frontier", "mit", "thinking"]
+  },
+  {
+    id: "deepseek-r1-distill-llama-70b",
+    name: "DeepSeek-R1-Distill-Llama-70B",
+    creator: "DeepSeek",
+    creatorLogo: "🐋",
+    description: "Дистиллят R1 в Llama 3.3 70B: открытая reasoning-модель на уровне o1-mini.",
+    releaseDate: "2025-01-20",
+    parameters: "70B",
+    paramsB: 70,
+    contextWindow: 128000,
+    license: "mit",
+    hfUrl: "https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+    benchmarks: { mmlu: 86.3, humaneval: 90.6, gsm8k: 95.1, truthfulqa: 64.0, mtBench: 9.0 },
+    pricing: { inputPerMillion: 2.0, outputPerMillion: 2.0, provider: "Together AI" },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["reasoning", "distilled", "mit"]
+  },
+  {
+    id: "deepseek-v2.5",
+    name: "DeepSeek-V2.5",
+    creator: "DeepSeek",
+    creatorLogo: "🐋",
+    description: "Сильный универсальный MoE с акцентом на код и reasoning, очень дешёвый API.",
+    releaseDate: "2024-09-05",
+    parameters: "MoE 236B",
+    paramsB: 21,
+    contextWindow: 128000,
+    license: "custom",
+    hfUrl: "https://huggingface.co/deepseek-ai/DeepSeek-V2.5",
+    benchmarks: { mmlu: 80.4, humaneval: 89.0, gsm8k: 95.1, truthfulqa: 58.0, mtBench: 9.02 },
+    pricing: { inputPerMillion: 0.14, outputPerMillion: 0.28, provider: "DeepSeek" },
+    deploymentOptions: ["api", "web-ui"],
+    trend: "down",
+    tags: ["moe", "code", "cheap"]
+  },
+
+  // ─── Google · Gemma ──────────────────────────────────────────────────────
+  {
+    id: "gemma-2-27b",
+    name: "Gemma 2 27B",
+    creator: "Google",
+    creatorLogo: "💎",
+    description: "Открытая модель от Google DeepMind с конкурентной производительностью в среднем классе.",
+    releaseDate: "2024-06-27",
+    parameters: "27B",
+    paramsB: 27,
+    contextWindow: 8192,
+    license: "custom",
+    hfUrl: "https://huggingface.co/google/gemma-2-27b-it",
+    benchmarks: { mmlu: 75.2, humaneval: 51.8, gsm8k: 74.0, truthfulqa: 58.0, mtBench: 8.47 },
+    pricing: { inputPerMillion: 0.27, outputPerMillion: 0.27, provider: "Together AI" },
+    deploymentOptions: ["local", "api"],
+    trend: "stable",
+    tags: ["general", "english"]
+  },
+  {
+    id: "gemma-2-9b",
+    name: "Gemma 2 9B",
+    creator: "Google",
+    creatorLogo: "💎",
+    description: "Средний класс Gemma 2: качество выше многих 13B при меньшем размере.",
+    releaseDate: "2024-06-27",
+    parameters: "9B",
+    paramsB: 9,
+    contextWindow: 8192,
+    license: "custom",
+    hfUrl: "https://huggingface.co/google/gemma-2-9b-it",
+    benchmarks: { mmlu: 71.3, humaneval: 40.2, gsm8k: 68.6, truthfulqa: 53.4, mtBench: 8.1 },
+    pricing: { inputPerMillion: 0.2, outputPerMillion: 0.2, provider: "Together AI" },
+    deploymentOptions: ["local", "colab", "api"],
+    trend: "stable",
+    tags: ["general", "small"]
+  },
+  {
+    id: "gemma-2-2b",
+    name: "Gemma 2 2B",
+    creator: "Google",
+    creatorLogo: "💎",
+    description: "Tiny-модель Google — отлично запускается на CPU и edge-устройствах.",
+    releaseDate: "2024-07-31",
+    parameters: "2B",
+    paramsB: 2,
+    contextWindow: 8192,
+    license: "custom",
+    hfUrl: "https://huggingface.co/google/gemma-2-2b-it",
+    benchmarks: { mmlu: 51.3, humaneval: 17.7, gsm8k: 23.9, truthfulqa: 43.0, mtBench: 7.4 },
+    deploymentOptions: ["local", "colab"],
+    trend: "up",
+    tags: ["tiny", "edge", "cpu"]
+  },
+
+  // ─── Microsoft · Phi ─────────────────────────────────────────────────────
+  {
+    id: "phi-4",
+    name: "Phi-4 (14B)",
+    creator: "Microsoft",
+    creatorLogo: "🪟",
+    description:
+      "Самая сильная Phi на сегодня: 14B параметров обгоняют многие 70B на reasoning и math.",
+    releaseDate: "2024-12-12",
+    parameters: "14B",
+    paramsB: 14,
+    contextWindow: 16384,
+    license: "mit",
+    hfUrl: "https://huggingface.co/microsoft/phi-4",
+    benchmarks: { mmlu: 84.8, humaneval: 82.6, gsm8k: 94.9, truthfulqa: 67.0, mtBench: 8.7 },
+    deploymentOptions: ["local", "colab"],
+    trend: "up",
+    tags: ["slm", "reasoning", "mit"]
+  },
+  {
+    id: "phi-3-medium",
+    name: "Phi-3 Medium 14B",
+    creator: "Microsoft",
+    creatorLogo: "🪟",
+    description: "Среднеразмерный Phi-3 с 128K контекстом и хорошим reasoning.",
+    releaseDate: "2024-05-21",
+    parameters: "14B",
+    paramsB: 14,
+    contextWindow: 128000,
+    license: "mit",
+    hfUrl: "https://huggingface.co/microsoft/Phi-3-medium-128k-instruct",
+    benchmarks: { mmlu: 78.0, humaneval: 62.2, gsm8k: 87.5, truthfulqa: 63.1, mtBench: 8.38 },
+    deploymentOptions: ["local", "colab"],
+    trend: "stable",
+    tags: ["slm", "reasoning", "edge", "mit"]
+  },
+  {
+    id: "phi-3-mini",
+    name: "Phi-3 Mini 3.8B",
+    creator: "Microsoft",
+    creatorLogo: "🪟",
+    description: "Маленькая Phi-3: умещается в браузер через ONNX, отличная для on-device assistant.",
+    releaseDate: "2024-04-23",
+    parameters: "3.8B",
+    paramsB: 3.8,
+    contextWindow: 128000,
+    license: "mit",
+    hfUrl: "https://huggingface.co/microsoft/Phi-3-mini-128k-instruct",
+    benchmarks: { mmlu: 69.7, humaneval: 58.5, gsm8k: 86.7, truthfulqa: 62.9, mtBench: 8.2 },
+    deploymentOptions: ["local", "colab"],
+    trend: "stable",
+    tags: ["slm", "edge", "mobile", "mit"]
+  },
+
+  // ─── Cohere · Command R ──────────────────────────────────────────────────
+  {
+    id: "command-r-plus",
+    name: "Command R+",
+    creator: "Cohere",
+    creatorLogo: "🅒",
+    description:
+      "Заточенная под RAG и tool use модель с длинным контекстом и сильным многоязычием.",
+    releaseDate: "2024-04-04",
+    parameters: "104B",
+    paramsB: 104,
+    contextWindow: 128000,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/CohereForAI/c4ai-command-r-plus",
+    benchmarks: { mmlu: 75.7, humaneval: 51.4, gsm8k: 70.7, truthfulqa: 64.5, mtBench: 8.4 },
+    pricing: { inputPerMillion: 3.0, outputPerMillion: 15.0, provider: "Cohere" },
+    deploymentOptions: ["api", "web-ui"],
+    trend: "down",
+    tags: ["rag", "tools", "multilingual"]
+  },
+  {
+    id: "command-r-08-2024",
+    name: "Command R (08-2024)",
+    creator: "Cohere",
+    creatorLogo: "🅒",
+    description: "Средний класс Cohere с RAG-фокусом. Обновление 35B-модели от Cohere For AI.",
+    releaseDate: "2024-08-30",
+    parameters: "35B",
+    paramsB: 35,
+    contextWindow: 128000,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/CohereForAI/c4ai-command-r-08-2024",
+    benchmarks: { mmlu: 68.2, humaneval: 47.6, gsm8k: 63.2, truthfulqa: 56.8, mtBench: 8.2 },
+    pricing: { inputPerMillion: 0.15, outputPerMillion: 0.6, provider: "Cohere" },
+    deploymentOptions: ["api", "local"],
+    trend: "stable",
+    tags: ["rag", "tools", "multilingual"]
+  },
+  {
+    id: "aya-expanse-32b",
+    name: "Aya Expanse 32B",
+    creator: "Cohere",
+    creatorLogo: "🅒",
+    description: "Open-weight модель с упором на 23 языка от Cohere For AI.",
+    releaseDate: "2024-10-24",
+    parameters: "32B",
+    paramsB: 32,
+    contextWindow: 128000,
+    license: "research-only",
+    hfUrl: "https://huggingface.co/CohereForAI/aya-expanse-32b",
+    benchmarks: { mmlu: 65.5, humaneval: 49.0, gsm8k: 63.5, truthfulqa: 57.0, mtBench: 8.0 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["multilingual", "research"]
+  },
+
+  // ─── 01.AI · Yi ──────────────────────────────────────────────────────────
+  {
+    id: "yi-1.5-34b",
+    name: "Yi 1.5 34B Chat",
+    creator: "01.AI",
+    creatorLogo: "🜂",
+    description: "Билингвальная модель (EN/ZH) с хорошим балансом качества и стоимости.",
+    releaseDate: "2024-05-12",
+    parameters: "34B",
+    paramsB: 34,
+    contextWindow: 32768,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/01-ai/Yi-1.5-34B-Chat",
+    benchmarks: { mmlu: 76.8, humaneval: 75.2, gsm8k: 82.7, truthfulqa: 60.5, mtBench: 8.5 },
+    deploymentOptions: ["local", "colab"],
+    trend: "stable",
+    tags: ["bilingual", "general", "apache"]
+  },
+  {
+    id: "yi-coder-9b",
+    name: "Yi Coder 9B",
+    creator: "01.AI",
+    creatorLogo: "🜂",
+    description: "Code-LLM от 01.AI: 52 языка программирования, 128K контекст.",
+    releaseDate: "2024-09-04",
+    parameters: "9B",
+    paramsB: 9,
+    contextWindow: 128000,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/01-ai/Yi-Coder-9B-Chat",
+    benchmarks: { mmlu: 60.5, humaneval: 85.4, gsm8k: 67.9, truthfulqa: 50.0, mtBench: 7.9 },
+    deploymentOptions: ["local", "colab", "api"],
+    trend: "up",
+    tags: ["code", "small", "apache"]
+  },
+
+  // ─── IBM · Granite ───────────────────────────────────────────────────────
+  {
+    id: "granite-3.1-8b",
+    name: "Granite 3.1 8B Instruct",
+    creator: "IBM",
+    creatorLogo: "🟦",
+    description: "Корпоративная LLM от IBM: акцент на безопасность, многоязычие и tool calling.",
+    releaseDate: "2024-12-18",
+    parameters: "8B",
+    paramsB: 8,
+    contextWindow: 128000,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/ibm-granite/granite-3.1-8b-instruct",
+    benchmarks: { mmlu: 65.5, humaneval: 71.3, gsm8k: 73.2, truthfulqa: 56.5, mtBench: 7.9 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["enterprise", "tools", "apache"]
+  },
+
+  // ─── AllenAI · OLMo ──────────────────────────────────────────────────────
+  {
+    id: "olmo-2-13b",
+    name: "OLMo 2 13B Instruct",
+    creator: "AllenAI",
+    creatorLogo: "🔶",
+    description: "Полностью открытая модель: веса, данные, чекпойнты, тренировочный код.",
+    releaseDate: "2024-11-26",
+    parameters: "13B",
+    paramsB: 13,
+    contextWindow: 4096,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/allenai/OLMo-2-1124-13B-Instruct",
+    benchmarks: { mmlu: 67.5, humaneval: 64.6, gsm8k: 75.1, truthfulqa: 58.0, mtBench: 8.0 },
+    deploymentOptions: ["local", "colab"],
+    trend: "up",
+    tags: ["fully-open", "research", "apache"]
+  },
+
+  // ─── BigCode · StarCoder ─────────────────────────────────────────────────
+  {
+    id: "starcoder2-15b",
+    name: "StarCoder2 15B",
+    creator: "BigCode",
+    creatorLogo: "⭐",
+    description: "Open-source code-LLM от BigCode (HF × ServiceNow × NVIDIA). 600+ языков.",
+    releaseDate: "2024-02-28",
+    parameters: "15B",
+    paramsB: 15,
+    contextWindow: 16384,
+    license: "custom",
+    hfUrl: "https://huggingface.co/bigcode/starcoder2-15b",
+    benchmarks: { mmlu: 49.5, humaneval: 46.3, gsm8k: 38.4, truthfulqa: 42.0, mtBench: 6.8 },
+    deploymentOptions: ["local", "colab"],
+    trend: "down",
+    tags: ["code", "open"]
+  },
+
+  // ─── Databricks · DBRX ───────────────────────────────────────────────────
+  {
+    id: "dbrx-instruct",
+    name: "DBRX Instruct",
+    creator: "Databricks",
+    creatorLogo: "🔷",
+    description: "Открытая MoE от Databricks: 132B параметров, 36B активных.",
+    releaseDate: "2024-03-27",
+    parameters: "MoE 132B (36B активных)",
+    paramsB: 36,
+    contextWindow: 32768,
+    license: "custom",
+    hfUrl: "https://huggingface.co/databricks/dbrx-instruct",
+    benchmarks: { mmlu: 73.7, humaneval: 70.1, gsm8k: 72.8, truthfulqa: 57.5, mtBench: 8.4 },
+    deploymentOptions: ["local", "api"],
+    trend: "down",
+    tags: ["moe", "general"]
+  },
+
+  // ─── AI21 · Jamba ────────────────────────────────────────────────────────
+  {
+    id: "jamba-1.5-mini",
+    name: "Jamba 1.5 Mini",
+    creator: "AI21 Labs",
+    creatorLogo: "🌀",
+    description: "Гибрид SSM + Transformer + MoE с 256K контекстом. Уникальная архитектура.",
+    releaseDate: "2024-08-22",
+    parameters: "MoE 52B (12B активных)",
+    paramsB: 12,
+    contextWindow: 256000,
+    license: "custom",
+    hfUrl: "https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini",
+    benchmarks: { mmlu: 69.7, humaneval: 62.8, gsm8k: 75.8, truthfulqa: 55.0, mtBench: 8.4 },
+    pricing: { inputPerMillion: 0.2, outputPerMillion: 0.4, provider: "AI21 Studio" },
+    deploymentOptions: ["local", "api"],
+    trend: "stable",
+    tags: ["hybrid", "ssm", "long-context"]
+  },
+
+  // ─── InternLM ────────────────────────────────────────────────────────────
+  {
+    id: "internlm-2.5-20b",
+    name: "InternLM 2.5 20B",
+    creator: "Shanghai AI Lab",
+    creatorLogo: "🜨",
+    description: "Билингвальная LLM от Shanghai AI Lab: сильный reasoning, 1M контекст.",
+    releaseDate: "2024-08-07",
+    parameters: "20B",
+    paramsB: 20,
+    contextWindow: 1000000,
+    license: "apache-2.0",
+    hfUrl: "https://huggingface.co/internlm/internlm2_5-20b-chat",
+    benchmarks: { mmlu: 73.5, humaneval: 71.3, gsm8k: 88.4, truthfulqa: 60.0, mtBench: 8.3 },
+    deploymentOptions: ["local", "colab"],
+    trend: "stable",
+    tags: ["bilingual", "long-context", "apache"]
+  },
+
+  // ─── Zhipu · GLM ─────────────────────────────────────────────────────────
+  {
+    id: "glm-4-9b",
+    name: "GLM-4 9B Chat",
+    creator: "Zhipu AI",
+    creatorLogo: "🜅",
+    description: "Открытая модель Zhipu: 26 языков, поддержка tool use и code-interpreter.",
+    releaseDate: "2024-06-04",
+    parameters: "9B",
+    paramsB: 9,
+    contextWindow: 128000,
+    license: "custom",
+    hfUrl: "https://huggingface.co/THUDM/glm-4-9b-chat",
+    benchmarks: { mmlu: 72.4, humaneval: 71.8, gsm8k: 79.6, truthfulqa: 60.0, mtBench: 8.35 },
+    deploymentOptions: ["local", "colab"],
+    trend: "stable",
+    tags: ["multilingual", "tools", "bilingual"]
+  },
+
+  // ─── TII · Falcon ────────────────────────────────────────────────────────
   {
     id: "falcon-180b",
     name: "Falcon 180B",
     creator: "TII",
     creatorLogo: "🦅",
-    description:
-      "Большая модель UAE Technology Innovation Institute. Любопытный baseline для сравнения.",
+    description: "Большая модель UAE Technology Innovation Institute. Любопытный baseline.",
     releaseDate: "2023-09-06",
     parameters: "180B",
     paramsB: 180,
     contextWindow: 2048,
     license: "custom",
     hfUrl: "https://huggingface.co/tiiuae/falcon-180B",
-    benchmarks: {
-      mmlu: 70.5,
-      humaneval: 35.4,
-      gsm8k: 19.6,
-      truthfulqa: 42.5,
-      mtBench: 7.2
-    },
+    benchmarks: { mmlu: 70.5, humaneval: 35.4, gsm8k: 19.6, truthfulqa: 42.5, mtBench: 7.2 },
     deploymentOptions: ["local"],
     trend: "down",
     tags: ["legacy", "research"]
+  },
+
+  // ─── NVIDIA · Nemotron ───────────────────────────────────────────────────
+  {
+    id: "nemotron-70b",
+    name: "Llama 3.1 Nemotron 70B",
+    creator: "NVIDIA",
+    creatorLogo: "🟩",
+    description: "Дообученная NVIDIA Llama 3.1 70B с RLHF — рекорды на Arena Hard и AlpacaEval 2.",
+    releaseDate: "2024-10-15",
+    parameters: "70B",
+    paramsB: 70,
+    contextWindow: 128000,
+    license: "llama3-community",
+    hfUrl: "https://huggingface.co/nvidia/Llama-3.1-Nemotron-70B-Instruct-HF",
+    benchmarks: { mmlu: 80.2, humaneval: 75.0, gsm8k: 93.0, truthfulqa: 62.5, mtBench: 8.9 },
+    deploymentOptions: ["local", "api"],
+    trend: "up",
+    tags: ["rlhf", "fine-tune"]
   }
 ];
 
 export function getModelById(id: string): LLMModel | undefined {
   return MODELS.find((m) => m.id === id);
+}
+
+export function getModelsByIds(ids: string[]): LLMModel[] {
+  const map = new Map(MODELS.map((m) => [m.id, m]));
+  return ids.map((id) => map.get(id)).filter((m): m is LLMModel => Boolean(m));
 }

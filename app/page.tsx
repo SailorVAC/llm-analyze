@@ -5,9 +5,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MODELS } from "@/lib/data";
 
 export default function HomePage() {
+  const creatorCount = new Set(MODELS.map((m) => m.creator)).size;
+  const apiCount = MODELS.filter((m) => m.pricing).length;
+
   return (
     <>
-      <Hero modelCount={MODELS.length} />
+      <Hero
+        modelCount={MODELS.length}
+        creatorCount={creatorCount}
+        apiCount={apiCount}
+      />
       <Suspense fallback={<GridFallback />}>
         <ExploreView models={MODELS} />
       </Suspense>

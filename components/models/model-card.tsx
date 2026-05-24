@@ -1,15 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight, TrendingDown, TrendingUp, Minus } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  LICENSE_LABELS,
-  type LLMModel
-} from "@/types/model";
+import { CompareToggle } from "@/components/compare/compare-toggle";
+import { LICENSE_LABELS, type LLMModel } from "@/types/model";
 import { formatContextWindow, formatUSD } from "@/lib/utils";
+import { useCompare } from "@/lib/compare-context";
 
 const TREND_ICON = {
   up: TrendingUp,
@@ -23,34 +21,47 @@ const TREND_COLOR = {
   stable: "text-muted-foreground"
 } as const;
 
-export function ModelCard({ model, index = 0 }: { model: LLMModel; index?: number }) {
+export function ModelCard({
+  model,
+  index = 0
+}: {
+  model: LLMModel;
+  index?: number;
+}) {
   const Trend = TREND_ICON[model.trend ?? "stable"];
   const trendColor = TREND_COLOR[model.trend ?? "stable"];
+  const { isSelected } = useCompare();
+  const inCompare = isSelected(model.id);
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.25, delay: Math.min(index, 8) * 0.02 }}
+    <div
+      className="animate-fade-in-up [animation-fill-mode:both]"
+      style={{ animationDelay: `${Math.min(index, 11) * 30}ms` }}
     >
       <Link href={`/models/${model.id}`} className="block group">
-        <Card className="relative h-full overflow-hidden border-gradient group-hover:scale-[1.02] group-hover:border-white/15">
+        <Card
+          className={`relative h-full overflow-hidden transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-white/15 ${
+            inCompare ? "ring-1 ring-indigo-400/40 shadow-lg shadow-indigo-500/10" : ""
+          }`}
+        >
           <CardContent className="p-5">
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-xl">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/5 text-xl transition-transform duration-300 group-hover:scale-105">
                   <span aria-hidden>{model.creatorLogo}</span>
                 </div>
-                <div>
-                  <h3 className="font-display text-base font-semibold leading-tight">
+                <div className="min-w-0">
+                  <h3 className="font-display text-base font-semibold leading-tight truncate">
                     {model.name}
                   </h3>
                   <p className="text-xs text-muted-foreground">{model.creator}</p>
                 </div>
               </div>
-              <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+
+              <div className="flex items-center gap-1.5">
+                <CompareToggle modelId={model.id} />
+                <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+              </div>
             </div>
 
             <p className="mt-4 line-clamp-2 text-sm text-muted-foreground">
@@ -76,7 +87,9 @@ export function ModelCard({ model, index = 0 }: { model: LLMModel; index?: numbe
                 <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
                   MMLU
                 </div>
-                <div className={`font-mono text-sm ${trendColor} inline-flex items-center gap-1`}>
+                <div
+                  className={`font-mono text-sm ${trendColor} inline-flex items-center gap-1`}
+                >
                   {model.benchmarks.mmlu.toFixed(1)}
                   <Trend className="h-3 w-3" />
                 </div>
@@ -103,6 +116,6 @@ export function ModelCard({ model, index = 0 }: { model: LLMModel; index?: numbe
           </CardContent>
         </Card>
       </Link>
-    </motion.div>
+    </div>
   );
 }
